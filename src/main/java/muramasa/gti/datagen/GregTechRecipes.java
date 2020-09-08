@@ -59,7 +59,7 @@ public class GregTechRecipes extends AntimatterRecipeProvider {
 //        RegistrationHelper.getMaterialsForDomain(Ref.ID).stream().filter(m -> m.has(PLATE, INGOT)).forEach(mat -> {
 //            Item plate = PLATE.get(mat);
 //            Item ingot = INGOT.get(mat);
-//            Tag<Item> ingotTag = getForgeItemTag("ingots/".concat(mat.getId()));
+//            ITag.INamedTag<Item> ingotTag = getForgeItemTag("ingots/".concat(mat.getId()));
 //            ShapedRecipeBuilder.shapedRecipe(plate).key('H', HAMMER.getTag()).key('I', ingotTag)
 //                    .patternLine("H").patternLine("I").patternLine("I").setGroup("ingots_hammer_to_plates")
 //                    .addCriterion("has_ingot_" + mat.getId(), this.hasItem(ingotTag)).build(consumer, sigh(ingot.getRegistryName().getPath() + "_hammer_to_" + plate.getRegistryName().getPath()));
@@ -68,7 +68,7 @@ public class GregTechRecipes extends AntimatterRecipeProvider {
 //        RegistrationHelper.getMaterialsForDomain(Ref.ID).stream().filter(m -> m.has(DUST)).forEach(mat -> {
 //            Item dust = DUST.get(mat);
 //            if (mat.has(ROCK)) {
-//                Tag<Item> rockTag = getForgeItemTag("rocks/".concat(mat.getId()));
+//                ITag.INamedTag<Item> rockTag = getForgeItemTag("rocks/".concat(mat.getId()));
 //                Item rock = ROCK.get(mat);
 //                Item smallDust = DUST_SMALL.get(mat);
 //                ShapelessRecipeBuilder.shapelessRecipe(dust)
@@ -86,7 +86,7 @@ public class GregTechRecipes extends AntimatterRecipeProvider {
 //            }
 //            if (mat.has(INGOT, GRINDABLE)) {
 //                Item ingot = INGOT.get(mat);
-//                Tag<Item> ingotTag = getForgeItemTag("ingots/".concat(mat.getId()));
+//                ITag.INamedTag<Item> ingotTag = getForgeItemTag("ingots/".concat(mat.getId()));
 //                ShapelessRecipeBuilder.shapelessRecipe(dust).addIngredient(ingotTag).addIngredient(MORTAR.getTag())
 //                        .addCriterion("has_ingot_" + mat.getId(), this.hasItem(getForgeItemTag("ingots/".concat(mat.getId()))))
 //                        .setGroup("ingots_grind_to_dust")

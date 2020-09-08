@@ -3,9 +3,10 @@ package muramasa.gti.tree;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.world.gen.IWorldGenerationReader;
-import net.minecraft.world.gen.feature.AbstractTreeFeature;
-import net.minecraft.world.gen.feature.TreeFeatureConfig;
+import net.minecraft.world.ISeedReader;
+import net.minecraft.world.gen.ChunkGenerator;
+import net.minecraft.world.gen.feature.BaseTreeFeatureConfig;
+import net.minecraft.world.gen.feature.Feature;
 import org.apache.commons.collections4.SetUtils;
 
 import java.util.Random;
@@ -14,13 +15,16 @@ import java.util.Set;
 import static muramasa.gti.data.GregTechData.RUBBER_LEAVES;
 import static muramasa.gti.data.GregTechData.RUBBER_LOG;
 
-public class RubberTreeFeature extends AbstractTreeFeature<TreeFeatureConfig> {
+public class RubberTreeFeature extends Feature<BaseTreeFeatureConfig> {
     public RubberTreeFeature() {
-        super(TreeFeatureConfig::deserializeAcacia);
+        super(BaseTreeFeatureConfig.CODEC);
     }
 
-    public boolean func_225557_a_(IWorldGenerationReader world, Random random, BlockPos pos, Set<BlockPos> set, Set<BlockPos> set1, MutableBoundingBox boundingBox, TreeFeatureConfig config) {
-        int baseHeight = config.baseHeight + random.nextInt(config.heightRandA + 1) + random.nextInt(config.heightRandB + 1);
+    @Override
+    public boolean func_241855_a(ISeedReader reader, ChunkGenerator generator, Random random, BlockPos pos, BaseTreeFeatureConfig config) {
+
+        //TODO: Refactor
+        /*int baseHeight = config.baseHeight + random.nextInt(config.heightRandA + 1) + random.nextInt(config.heightRandB + 1);
         int trunkHeight = config.trunkHeight >= 0 ? config.trunkHeight + random.nextInt(config.trunkHeightRandom + 1) : baseHeight - (config.foliageHeight + random.nextInt(config.foliageHeightRandom + 1));
 
         if (!isSoil(world, pos.down(), config.getSapling()))
@@ -28,10 +32,10 @@ public class RubberTreeFeature extends AbstractTreeFeature<TreeFeatureConfig> {
 
         // check if at least bare trunk may be placed
         for (int i = 1; i < trunkHeight; ++i)
-            if (!func_214587_a(world, pos.add(0, i, 0)))
+            if (!func_236293_a_(reader, pos.add(0, i, 0)))
                 return false;
 
-         // fill upper trunk
+        // fill upper trunk
         for (int y = trunkHeight; y < baseHeight; ++y)
             set.add(pos.add(0, y, 0));
 
@@ -68,8 +72,8 @@ public class RubberTreeFeature extends AbstractTreeFeature<TreeFeatureConfig> {
                 }
             }
         }
-        makeBareTrunk(world, random, pos, set, config, trunkHeight);
-        updateBoundingBox(pos, SetUtils.union(set, set1), boundingBox);
+        makeBareTrunk(reader, random, pos, set, config, trunkHeight);
+        updateBoundingBox(pos, SetUtils.union(set, set1), boundingBox);*/
         return true;
     }
 
@@ -123,18 +127,18 @@ public class RubberTreeFeature extends AbstractTreeFeature<TreeFeatureConfig> {
         }
     }
 
-    private boolean tryContinueBranch(Set<BlockPos> set, BlockPos p, Direction dir) {
-        if (set.contains(p.offset(dir,1))||set.contains(p.offset(dir.rotateY(),1))|| set.contains(p.offset(dir.rotateYCCW(),1)))
+    private boolean tryContinueBranch(Set<BlockPos> set, BlockPos pos, Direction dir) {
+        if (set.contains(pos.offset(dir,1))||set.contains(pos.offset(dir.rotateY(),1))|| set.contains(pos.offset(dir.rotateYCCW(),1)))
             return false;
-        set.add(p);
+        set.add(pos);
         return true;
     }
 
-    private void makeBareTrunk(IWorldGenerationReader world, Random random, BlockPos pos, Set<BlockPos> set, TreeFeatureConfig config, int trunkHeight) {
+    private void makeBareTrunk(ISeedReader reader, Random random, BlockPos pos, Set<BlockPos> set, BaseTreeFeatureConfig config, int trunkHeight) {
         for (int i = 0; i < trunkHeight; ++i) {
             BlockPos p = pos.add(0, i, 0);
             set.add(p);
-            this.setBlockState(world, p, config.trunkProvider.getBlockState(random, pos));
+            this.func_230367_a_(reader, p, config.trunkProvider.getBlockState(random, pos));
         }
     }
 }

@@ -14,8 +14,8 @@ public class GregTechBlockTagProvider extends AntimatterBlockTagProvider {
     @Override
     public void registerTags() {
         super.registerTags();
-        this.getBuilder(BlockTags.LOGS).add(GregTechData.RUBBER_LOG);
-        this.getBuilder(BlockTags.LEAVES).add(GregTechData.RUBBER_LEAVES);
-        this.getBuilder(BlockTags.SAPLINGS).add(GregTechData.RUBBER_SAPLING);
+        this.getOrCreateBuilder(BlockTags.LOGS).add(GregTechData.RUBBER_LOG);
+        this.getOrCreateBuilder(BlockTags.LEAVES).add(GregTechData.RUBBER_LEAVES);
+        this.getOrCreateBuilder(BlockTags.SAPLINGS).add(GregTechData.RUBBER_SAPLING);
     }
 }

@@ -6,12 +6,13 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.trees.Tree;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.blockstateprovider.WeightedBlockStateProvider;
+import net.minecraft.world.gen.feature.BaseTreeFeatureConfig;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.TreeFeatureConfig;
+import net.minecraft.world.server.ServerWorld;
 
+import javax.annotation.Nullable;
 import java.util.Random;
 
 public class RubberTree extends Tree {
@@ -20,32 +21,38 @@ public class RubberTree extends Tree {
 
     public RubberTree() {
         BlockStateProperties.HORIZONTAL_FACING.getAllowedValues().forEach(d -> {
-            TRUNK_BLOCKS.func_227407_a_(GregTechData.RUBBER_LOG.getDefaultState()
+            TRUNK_BLOCKS.addWeightedBlockstate(GregTechData.RUBBER_LOG.getDefaultState()
                     .with(BlockRubberLog.RESIN_STATE, ResinState.FILLED)
                     .with(BlockRubberLog.RESIN_FACING, d), 1);
-            TRUNK_BLOCKS.func_227407_a_(GregTechData.RUBBER_LOG.getDefaultState()
+            TRUNK_BLOCKS.addWeightedBlockstate(GregTechData.RUBBER_LOG.getDefaultState()
                     .with(BlockRubberLog.RESIN_STATE, ResinState.EMPTY)
                     .with(BlockRubberLog.RESIN_FACING, d), 1);
         });
-        TRUNK_BLOCKS.func_227407_a_(GregTechData.RUBBER_LOG.getDefaultState()
+        TRUNK_BLOCKS.addWeightedBlockstate(GregTechData.RUBBER_LOG.getDefaultState()
                 .with(BlockRubberLog.RESIN_STATE, ResinState.NONE), 16);
     }
 
+    @Nullable
     @Override
-    protected ConfiguredFeature<TreeFeatureConfig, ?> getTreeFeature(Random rand, boolean flowers) {
+    protected ConfiguredFeature<BaseTreeFeatureConfig, ?> getTreeFeature(Random random, boolean b) {
+        return null;
+    }
+
+    /*@Override
+    protected ConfiguredFeature<BaseTreeFeatureConfig, ?> getTreeFeature(Random rand, boolean flowers) {
         return TREE_FEATURE.withConfiguration(RubberTreeWorldGen.RUBBER_TREE_CONFIG_NORMAL);
     }
 
     @Override
-    public boolean func_225545_a_(IWorld world, ChunkGenerator<?> chunkGenerator, BlockPos pos, BlockState state, Random random) {
-        ConfiguredFeature<TreeFeatureConfig, ?> configuredFeature = TREE_FEATURE
+    public boolean attemptGrowTree(ServerWorld world, ChunkGenerator chunkGenerator, BlockPos pos, BlockState state, Random random) {
+        ConfiguredFeature<BaseTreeFeatureConfig, ?> configuredFeature = TREE_FEATURE
                 .withConfiguration(RubberTreeWorldGen.getTreeConfig(world.getBiome(pos)));
         world.setBlockState(pos, Blocks.AIR.getDefaultState(), 4);
         configuredFeature.config.forcePlacement();
-        if (!configuredFeature.place(world, chunkGenerator, random, pos)) {
+        if (!configuredFeature.func_242765_a(world, chunkGenerator, random, pos)) {
             world.setBlockState(pos, state, 4);
             return false;
         } else
             return true;
-    }
+    }*/
 }
