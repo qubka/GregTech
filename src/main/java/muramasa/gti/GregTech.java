@@ -12,6 +12,7 @@ import muramasa.gti.loader.MachineRecipeLoader;
 import muramasa.gti.loader.MaterialRecipeLoader;
 import muramasa.gti.loader.WorldGenLoader;
 import muramasa.gti.proxy.ClientHandler;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -28,7 +29,8 @@ public class GregTech extends AntimatterMod {
     public GregTech() {
         super();
         INSTANCE = this;
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        //MinecraftForge.EVENT_BUS.register(this);
+        //FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 
         //GregTechAPI.addRegistrar(new ForestryRegistrar());
         //GregTechAPI.addRegistrar(new GalacticraftRegistrar());
@@ -48,9 +50,9 @@ public class GregTech extends AntimatterMod {
         ClientHandler.setup(e);
     }
 
-    private void setup(final FMLCommonSetupEvent e) {
+    /*private void setup(final FMLCommonSetupEvent e) {
 
-    }
+    }*/
 
     @Override
     public void onRegistrationEvent(RegistrationEvent event) {
